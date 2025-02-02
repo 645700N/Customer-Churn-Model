@@ -14,13 +14,6 @@ columnas_español = ['Estado', 'longitud de la cuenta', 'Codigo de area', 'Telef
 data2 = pd.read_csv('dataset/Customer Churn Model.txt', header=0, names=columnas_español)
 
 
-#Filtrado de personas con el plan internacional (type=df)
-df_intl_plan = data[data["Int'l Plan"] == 'yes']
-#Columna de personas con el plan internacional (type=series)
-intl_plan = df_intl_plan["Int'l Plan"]
-#Columna de minutos internacionael de personas que poseen el plan internacional (type=series)
-intl_mins = df_intl_plan["Intl Mins"]
-
 #filtrado por iloc(basado en posicion) y loc(basado en etiqueta)
 sample_data = data.iloc[:20, 3:6]
 sample_data1 = data.iloc[:20, [2,4,6]]
@@ -45,6 +38,22 @@ states = states.tolist()
 total_state_calls = pd.DataFrame(state_list, states)
 print(total_state_calls)
 
+#El estado de Virginia Occidental realiza mas llamadas que otros estados
+#print(total_state_calls.max())
+
 plt.bar(states, state_list)
 plt.xticks(rotation=60, horizontalalignment='left')
-plt.show()
+#plt.show()
+
+#Ejercico 2: ¿Cual es el porcentaje total de personas que poseen el plan internacional?
+
+#Filtrado de personas con el plan internacional (type=df)
+df_intl_plan = data[data["Int'l Plan"] == 'yes']
+#Columna de personas con el plan internacional (type=series)
+intl_plan = df_intl_plan["Int'l Plan"]
+#Columna de minutos internacionales de personas que poseen el plan internacional (type=series)
+intl_mins = df_intl_plan["Intl Mins"]
+
+intl_mean = round((100 * (len(intl_plan))) / (len(data) - 1), 2)
+
+print(f'El porcentaje de usuarios con el plan Internacional es de: %{intl_mean}')
